@@ -4,12 +4,7 @@ import Header from '../header';
 
 import CharactersPage from '../charactersPage/charactersPage';
 
-
-
-
-
 class App extends Component {
-
     render() {
         return (
             <>

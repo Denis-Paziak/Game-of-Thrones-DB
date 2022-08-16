@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import './charDetails.css';
+import './itemDetails.css';
 import GotService from "../../services/gotService";
 
-export default class CharDetails extends Component {
+export default class ItemDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {

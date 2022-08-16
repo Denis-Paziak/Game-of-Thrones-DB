@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Col, Row } from 'reactstrap';
 
-import RandomChar from '../randomChar';
+import RandomItems from '../randomItems';
 import ItemList from '../itemList';
-import CharDetails from '../charDetails';
+import ItemDetails from '../itemDetails';
+import GotService from "../../services/gotService";
+
 
 export default class CharactersPage extends Component {
     constructor(props) {
@@ -12,7 +14,7 @@ export default class CharactersPage extends Component {
             charId: 130
         }
     }
-
+    gotService = new GotService();
     getCharId(id) {
         this.setState({
             charId: id
@@ -24,15 +26,23 @@ export default class CharactersPage extends Component {
             <>
                 <Row>
                     <Col lg={{ size: 5, offset: 0 }}>
-                        <RandomChar />
+                        <RandomItems
+                            endIdItem={1000}
+                            getItemFunction={this.gotService.getCharacters}
+                            transformItemFunction={this.gotService.transformCharacters}
+                            itemKeys={["name", "gender", "born", "died", "culture"]}
+                        />
                     </Col>
                 </Row>
                 <Row>
                     <Col md='6'>
-                        <ItemList getCharId={(id) => this.getCharId(id)} />
+                        <ItemList
+                            getItemId={(id) => this.getCharId(id)}
+                            getItemFunction={this.gotService.getAllCharacters}
+                        />
                     </Col>
                     <Col md='6'>
-                        <CharDetails charId={this.state.charId} />
+                        <ItemDetails charId={this.state.charId} />
                     </Col>
                 </Row>
             </>

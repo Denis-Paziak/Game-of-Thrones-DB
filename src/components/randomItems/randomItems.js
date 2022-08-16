@@ -1,63 +1,68 @@
 import React, { Component } from 'react';
-import './randomChar.css';
+import './randomItems.css';
 import GotService from "../../services/gotService";
 import Loading from "../loading";
 
-export default class RandomChar extends Component {
+export default class RandomItems extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            char: null,
+            item: {},
             loading: true,
-            keysChar: ["name", "gender", "born", "died", "culture"]
         }
-        this.generateNewRandomChar = this.generateNewRandomChar.bind(this);
+        this.generateNewRandomItem = this.generateNewRandomItem.bind(this);
     }
 
     gotService = new GotService();
 
     componentDidMount() {
-        this.updateChar();
-        this.timerId = setInterval(this.updateChar, 6000);
+        const { endIdItem } = this.props;
+        this.updateItem(endIdItem);
+        this.timerId = setInterval(() => { this.updateItem(endIdItem) }, 6000);
     }
 
-    updateChar = () => {
+    updateItem = (endId) => {
         this.setState({
-            char: null,
+            item: {},
         });
-        const id = Math.floor(Math.random() * 2000 + 25);
-        this.gotService.getCharacters(id)
-            .then(char => {
-                this.state.keysChar.forEach(key => {
-                    if (char[key] === '') {
-                        char[key] = "No data :(";
+
+        const id = Math.floor(Math.random() * endId + 25);
+
+        this.props.getItemFunction(id)
+            .then(item => {
+                this.props.itemKeys.forEach(key => {
+                    if (item[key] === '') {
+                        item[key] = "No data :(";
                     }
                 });
+
                 this.setState({
-                    char: this.gotService.transformCharacters(char),
+                    item: this.props.transformItemFunction(item),
                 });
             })
     }
 
-    generateNewRandomChar() {
-        this.updateChar();
+    generateNewRandomItem() {
+        const { endIdItem } = this.props;
+
+        this.updateItem(endIdItem);
         clearInterval(this.timerId);
     }
 
-    myRender(loading) {
-        let res = {};
+    renderItems(loading) {
+        let result = {};
 
         if (loading === true) {
-            res.name = <Loading />;
-            res.gender = <Loading />;
-            res.born = <Loading />;
-            res.died = <Loading />;
-            res.culture = <Loading />;
+            result.name = <Loading />;
+            result.gender = <Loading />;
+            result.born = <Loading />;
+            result.died = <Loading />;
+            result.culture = <Loading />;
         } else {
-            res = this.state.char;
+            result = this.state.item;
         }
 
-        const { name, gender, born, died, culture } = res;
+        const { name, gender, born, died, culture } = result;
 
         return (
             <>
@@ -85,12 +90,15 @@ export default class RandomChar extends Component {
     }
 
     render() {
+        const { item } = this.state;
+        const itemLenght = Object.keys(item).length;
+
         let result;
 
-        if (this.state.char == null) {
-            result = this.myRender(true);
+        if (itemLenght <= 0) {
+            result = this.renderItems(true);
         } else {
-            result = this.myRender(false);
+            result = this.renderItems(false);
         }
 
 
@@ -99,7 +107,7 @@ export default class RandomChar extends Component {
                 <div className="random-block rounded">
                     {result}
                 </div>
-                <button className='btn btn-primary' onClick={this.generateNewRandomChar}>Generate random character</button>
+                <button className='btn btn-primary' onClick={this.generateNewRandomItem}>Generate random character</button>
             </>
         );
     }

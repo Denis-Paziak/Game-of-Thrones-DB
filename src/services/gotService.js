@@ -3,36 +3,36 @@ class GotService {
         this._apiBase = "https://anapioficeandfire.com/api"
     }
 
-    async getResourse(url) {
+    getResourse = async (url) => {
         const res = await fetch(this._apiBase + url);
         return await res.json();
     }
 
-    getCharacters(id) {
+    getCharacters = (id) => {
         return this.getResourse("/characters/" + id);
     }
 
-    getAllCharacters() {
+    getAllCharacters = () => {
         return this.getResourse("/characters?page=5&pageSize=10");
     }
 
-    getBooks(id) {
+    getBooks = (id) => {
         return this.getResourse("/books/" + id);
     }
 
-    getAllBooks() {
+    getAllBooks = () => {
         return this.getResourse("/books");
     }
 
-    getHouses(id) {
+    getHouses = (id) => {
         return this.getResourse("/houses/" + id);
     }
 
-    getAllHouses() {
+    getAllHouses = () => {
         return this.getResourse("/houses");
     }
 
-    transformCharacters(char) {
+    transformCharacters = (char) => {
         return {
             name: char.name,
             gender: char.gender,
@@ -42,7 +42,7 @@ class GotService {
         }
     }
 
-    transformBooks(book) {
+    transformBooks = (book) => {
         return {
             name: book.name,
             region: book.region,
@@ -53,7 +53,7 @@ class GotService {
         }
     }
 
-    transformHouses(house) {
+    transformHouses = (house) => {
         return {
             name: house.name,
             numberOfPages: house.numberOfPages,
