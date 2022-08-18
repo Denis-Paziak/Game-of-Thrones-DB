@@ -26,16 +26,10 @@ export default class RandomItems extends Component {
             item: {},
         });
 
-        const id = Math.floor(Math.random() * endId + 25);
+        const id = Math.floor(Math.random() * endId + 1);
 
         this.props.getItemFunction(id)
             .then(item => {
-                this.props.itemKeys.forEach(key => {
-                    if (item[key] === '') {
-                        item[key] = "No data :(";
-                    }
-                });
-
                 this.setState({
                     item: this.props.transformItemFunction(item),
                 });
@@ -69,11 +63,11 @@ export default class RandomItems extends Component {
                 <h4>Random Character: {name}</h4>
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item d-flex justify-content-between">
-                        <span className="term">Gender </span>
+                        <span className="term">Gender</span>
                         <span>{gender}</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between">
-                        <span className="term">Born </span>
+                        <span className="term">Born</span>
                         <span>{born}</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between">

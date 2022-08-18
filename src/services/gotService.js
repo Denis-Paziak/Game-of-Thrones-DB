@@ -9,6 +9,7 @@ class GotService {
     }
 
     getCharacters = (id) => {
+        id = 40 + id;
         return this.getResourse("/characters/" + id);
     }
 
@@ -25,6 +26,7 @@ class GotService {
     }
 
     getHouses = (id) => {
+        console.log(this.getResourse("/houses"));
         return this.getResourse("/houses/" + id);
     }
 
@@ -45,20 +47,20 @@ class GotService {
     transformBooks = (book) => {
         return {
             name: book.name,
-            region: book.region,
-            words: book.words,
-            titles: book.titles,
-            overlord: book.overlord,
-            ancestralWeapons: book.ancestralWeapons,
+            numberOfPages: book.numberOfPages,
+            publiser: book.publiser,
+            released: book.released,
         }
     }
 
     transformHouses = (house) => {
         return {
             name: house.name,
-            numberOfPages: house.numberOfPages,
-            publiser: house.publiser,
-            released: house.released,
+            region: house.region,
+            words: house.words,
+            titles: house.titles,
+            overlord: house.overlord,
+            ancestralWeapons: house.ancestralWeapons,
         }
     }
 }

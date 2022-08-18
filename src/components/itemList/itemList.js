@@ -7,22 +7,18 @@ export default class ItemList extends Component {
         this.state = {
             item: null
         }
-
-
     }
 
     componentDidMount() {
-        this.getAllCharacters();
+        this.getAllItem();
     }
 
-
-
-    getAllCharacters() {
+    getAllItem() {
         this.props.getItemFunction()
             .then(items => {
                 items = items.map((item, id) => {
                     return (
-                        <li key={id} onClick={() => { this.props.getItemId(41 + id) }} className="list-group-item">
+                        <li key={id} onClick={() => { this.props.getItemId(1 + id) }} className="list-group-item">
                             {item.name}
                         </li>
                     )

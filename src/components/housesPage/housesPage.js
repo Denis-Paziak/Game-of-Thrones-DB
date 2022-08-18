@@ -5,7 +5,7 @@ import ItemDetails from '../itemDetails';
 import GotService from "../../services/gotService";
 
 
-export default class CharactersPage extends Component {
+export default class HousesPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -29,13 +29,13 @@ export default class CharactersPage extends Component {
                     <Col md='6'>
                         <ItemList
                             getItemId={(id) => this.getItemId(id)}
-                            getItemFunction={this.gotService.getAllCharacters}
+                            getItemFunction={this.gotService.getAllHouses}
                         />
                     </Col>
                     <Col md='6'>
                         <ItemDetails
-                            transformFunction={this.gotService.transformCharacters}
-                            getItemFunction={this.gotService.getCharacters}
+                            transformFunction={this.gotService.transformHouses}
+                            getItemFunction={this.gotService.getHouses}
                             itemId={this.state.itemId}
                         />
                     </Col>

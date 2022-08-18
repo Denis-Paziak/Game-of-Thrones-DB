@@ -1,62 +1,54 @@
 import React, { Component } from 'react';
 import './itemDetails.css';
-import GotService from "../../services/gotService";
 
 export default class ItemDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            char: {},
-            keysChar: ["name", "gender", "born", "died", "culture"]
+            item: {},
         }
     }
-    gotService = new GotService();
 
-    getChar(id) {
-        this.gotService.getCharacters(id)
+    getItem(id) {
+        this.props.getItemFunction(id)
             .then(data => {
-                this.state.keysChar.forEach(key => {
-                    if (data[key] === '') {
-                        data[key] = "No data :(";
-                    }
-                });
-
                 this.setState({
-                    char: data
+                    item: data
                 });
             });
     }
-
     componentDidMount() {
-        this.getChar(100);
+        this.getItem(this.props.itemId);
+    }
+    componentDidUpdate(prevProps) {
+        if (this.props.itemId !== prevProps.itemId) {
+            this.getItem(this.props.itemId);
+        }
     }
 
-    componentDidUpdate(props) {
-        this.getChar(props.charId);
+    renderItem(keys) {
+        const data = this.props.transformFunction(this.state.item);
+        const result = [];
+
+        for (keys in data) {
+            result.push(
+                <li key={keys} className="list-group-item d-flex justify-content-between">
+                    <span className="term">{keys}</span>
+                    <span>{this.state.item[keys]}</span>
+                </li>
+            );
+        }
+
+        return result;
     }
 
     render() {
-        const { name, gender, born, died, culture } = this.state.char;
+        let result = this.renderItem(this.props.itemKeys)
         return (
             <div className="char-details rounded">
-                <h4>{name}</h4>
+                <h4>Detailed information</h4>
                 <ul className="list-group list-group-flush">
-                    <li className="list-group-item d-flex justify-content-between">
-                        <span className="term">Gender</span>
-                        <span>{gender}</span>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between">
-                        <span className="term">Born</span>
-                        <span>{born}</span>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between">
-                        <span className="term">Died</span>
-                        <span>{died}</span>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between">
-                        <span className="term">Culture</span>
-                        <span>{culture}</span>
-                    </li>
+                    {result}
                 </ul>
             </div>
         );
