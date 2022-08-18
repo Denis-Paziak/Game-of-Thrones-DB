@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Game-of-Thrones-DB/static/css/main.bbefafdb.css",
+    "main.js": "/Game-of-Thrones-DB/static/js/main.70e55f56.js",
+    "index.html": "/Game-of-Thrones-DB/index.html",
+    "main.bbefafdb.css.map": "/Game-of-Thrones-DB/static/css/main.bbefafdb.css.map",
+    "main.70e55f56.js.map": "/Game-of-Thrones-DB/static/js/main.70e55f56.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bbefafdb.css",
+    "static/js/main.70e55f56.js"
+  ]
+}
